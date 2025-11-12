@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Requests - Server Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='custom.css')}}">
+    <link rel="icon" href="{{url_for('static', filename='img/favicon.ico')}}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/shome">
+                <i class="fas fa-server me-2"></i>
+                Server Dashboard
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shome">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sviewencfiles">Digital Signatures</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/vuserreq">User Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-primary text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="display-4 fw-bold">
+                        <i class="fas fa-user-check me-3"></i>User Access Requests
+                    </h1>
+                    <p class="lead">Review and approve user requests for file access</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Requests Table Section -->
+    <section class="py-5">
+        <div class="container">
+            {% if m1 %}
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>{{ m1 }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endif %}
+
+            {% if userreqdata %}
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-list me-2"></i>Pending User Requests
+                        </h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <i class="fas fa-file me-2"></i>File Name
+                                        </th>
+                                        <th>
+                                            <i class="fas fa-database me-2"></i>File Data
+                                        </th>
+                                        <th>
+                                            <i class="fas fa-user-tie me-2"></i>Owner
+                                        </th>
+                                        <th>
+                                            <i class="fas fa-user me-2"></i>User Email
+                                        </th>
+                                        <th class="text-center">
+                                            <i class="fas fa-paper-plane me-2"></i>Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for filename, data, owner, email in userreqdata %}
+                                        <tr>
+                                            <td>
+                                                <i class="fas fa-file text-primary me-2"></i>
+                                                <strong>{{ filename }}</strong>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-light text-dark">{{ data[:50] }}{% if data|length > 50 %}...{% endif %}</span>
+                                            </td>
+                                            <td>
+                                                <i class="fas fa-user-tie text-success me-2"></i>{{ owner }}
+                                            </td>
+                                            <td>
+                                                <i class="fas fa-envelope text-info me-2"></i>{{ email }}
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="/response?filename={{ filename }}&data={{ data }}&owner={{ owner }}&email={{ email }}"
+                                                   class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-signature me-1"></i>Send Digital Signature
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <small>
+                            <i class="fas fa-info-circle me-1"></i>
+                            Click "Send Digital Signature" to approve the request and send cryptographic keys to the user.
+                        </small>
+                    </div>
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-inbox fa-5x text-muted mb-4"></i>
+                    <h3 class="text-muted">No Pending Requests</h3>
+                    <p class="text-muted">There are currently no user access requests to review.</p>
+                    <a href="/shome" class="btn btn-primary">
+                        <i class="fas fa-home me-2"></i>Back to Server Dashboard
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Request Management</h5>
+                    <p>Securely manage user access requests with digital signatures.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">© 2024 AI Governance System. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Signature Verification - User Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='custom.css')}}">
+    <link rel="icon" href="{{url_for('static', filename='img/favicon.ico')}}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/userhome">
+                <i class="fas fa-user me-2"></i>
+                User Dashboard
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/userhome">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vf">View Files</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/download">Verify & Download</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-warning text-dark py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="display-4 fw-bold">
+                        <i class="fas fa-signature me-3"></i>Digital Signature Verification
+                    </h1>
+                    <p class="lead">Authenticate your file download with cryptographic verification</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Verification Form Section -->
+    <section class="py-5">
+        <div class="container">
+            {% if m1 %}
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>{{ m1 }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endif %}
+
+            {% if downloadview %}
+                {% for filename, owner, hsmsg in downloadview %}
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <div class="card shadow-lg border-0">
+                                <div class="card-header bg-warning text-dark text-center">
+                                    <i class="fas fa-key fa-3x mb-3"></i>
+                                    <h3 class="card-title mb-0">Verify File: {{ filename }}</h3>
+                                </div>
+                                <div class="card-body p-4">
+                                    <form action="/verify1" method="post">
+                                        <div class="mb-3">
+                                            <label for="filename" class="form-label">
+                                                <i class="fas fa-file me-2"></i>File Name
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg" id="filename"
+                                                   name="filename" value="{{ filename }}" readonly>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="hashmsg" class="form-label">
+                                                <i class="fas fa-lock me-2"></i>Encrypted Data
+                                            </label>
+                                            <textarea class="form-control form-control-lg" id="hashmsg"
+                                                      name="hashmsg" rows="3" readonly>{{ hsmsg }}</textarea>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label for="publickey" class="form-label">
+                                                <i class="fas fa-key me-2"></i>Public Key
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg" id="publickey"
+                                                   name="publickey" placeholder="Enter the public key for verification" required>
+                                            <div class="form-text">
+                                                Enter the public key provided by the file owner for signature verification
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-warning btn-lg">
+                                                <i class="fas fa-check-circle me-2"></i>Verify & Download
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <small>
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        This verification ensures the file integrity and authenticity before download.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Security Info -->
+                            <div class="card mt-4 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="fas fa-shield-alt me-2 text-warning"></i>Security Information
+                                    </h5>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2">
+                                            <i class="fas fa-check text-success me-2"></i>
+                                            Cryptographic signature verification
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check text-success me-2"></i>
+                                            File integrity validation
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check text-success me-2"></i>
+                                            Secure download process
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-exclamation-triangle fa-5x text-muted mb-4"></i>
+                    <h3 class="text-muted">No File Selected</h3>
+                    <p class="text-muted">Please select a file from the downloads page to verify.</p>
+                    <a href="/download" class="btn btn-warning">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Downloads
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Digital Verification Portal</h5>
+                    <p>Secure file verification using advanced cryptographic methods.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">© 2024 AI Governance System. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

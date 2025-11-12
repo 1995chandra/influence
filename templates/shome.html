@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Dashboard - AI Governance System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='custom.css')}}">
+    <link rel="icon" href="{{url_for('static', filename='img/favicon.ico')}}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/shome">
+                <i class="fas fa-server me-2"></i>
+                Server Dashboard
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/shome">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sviewencfiles">Digital Signatures</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vuserreq">User Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">Server Administration</h1>
+                    <p class="hero-subtitle">Centralized AI governance and cybersecurity management for smart cities</p>
+                    {% if m1 == "sucess" %}
+                        <div class="alert alert-success" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>Login Successful! Welcome to server administration.
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-6">
+                    <div class="d-flex align-items-center justify-content-center h-100">
+                        <div class="text-center">
+                            <i class="fas fa-cogs feature-icon animate-pulse"></i>
+                            <h3 class="text-white mt-3">System Control Center</h3>
+                            <p class="text-white-50">Advanced server management and monitoring</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-5 fw-bold">Server Management</h2>
+                    <p class="lead">Comprehensive control over AI governance systems</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <i class="fas fa-signature fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Digital Signatures</h5>
+                            <p class="card-text">Monitor and validate digital signatures across the system</p>
+                            <a href="/sviewencfiles" class="btn btn-primary">View Signatures</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <i class="fas fa-user-check fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">User Requests</h5>
+                            <p class="card-text">Review and manage user access requests</p>
+                            <a href="/vuserreq" class="btn btn-success">View Requests</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <i class="fas fa-chart-line fa-3x text-warning mb-3"></i>
+                            <h5 class="card-title">System Analytics</h5>
+                            <p class="card-text">Monitor AI performance and security metrics</p>
+                            <button class="btn btn-warning" disabled>Coming Soon</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="display-5 fw-bold mb-4">AI-Powered Server Management</h2>
+                    <p class="lead mb-4">
+                        Our server administration platform provides comprehensive control over AI governance systems,
+                        ensuring secure and efficient management of smart city infrastructure and cybersecurity protocols.
+                    </p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-shield-alt fa-2x text-primary mb-2"></i>
+                                    <h6>Advanced Security</h6>
+                                    <p>Multi-layered security protocols</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-brain fa-2x text-success mb-2"></i>
+                                    <h6>AI Integration</h6>
+                                    <p>Intelligent automation and monitoring</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-city fa-2x text-warning mb-2"></i>
+                                    <h6>Smart City Control</h6>
+                                    <p>Unified governance platform</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Server Administration</h5>
+                    <p>Advanced AI governance and cybersecurity management.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">© 2024 AI Governance System. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

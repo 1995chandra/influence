@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Behavior Analysis - Owner Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='custom.css')}}">
+    <link rel="icon" href="{{url_for('static', filename='img/favicon.ico')}}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/ownerhome">
+                <i class="fas fa-brain me-2"></i>
+                Owner Dashboard
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ownerhome">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/fileupload">File Upload</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ownerviewfiles">View Files</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/viewencfiles">Digital Signatures</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-info text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="display-4 fw-bold">
+                        <i class="fas fa-robot me-3"></i>AI Behavior Analysis
+                    </h1>
+                    <p class="lead">Advanced machine learning analysis for cybersecurity threat detection</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analysis Form Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-header bg-info text-white text-center">
+                            <i class="fas fa-chart-line fa-3x mb-3"></i>
+                            <h3 class="card-title mb-0">Behavior Analysis Parameters</h3>
+                        </div>
+                        <div class="card-body p-4">
+                            <form name="myform" method="post" action="/addfact">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="fname" class="form-label">
+                                                <i class="fas fa-file me-2"></i>File Name
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg" id="fname"
+                                                   name="fname" value="{{fname}}" placeholder="Enter file name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="Login_Frequency" class="form-label">
+                                                <i class="fas fa-sign-in-alt me-2"></i>Login Frequency
+                                            </label>
+                                            <input type="number" class="form-control form-control-lg" id="Login_Frequency"
+                                                   name="Login_Frequency" placeholder="e.g., 5" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="Failed_Login_Attempts" class="form-label">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>Failed Login Attempts
+                                            </label>
+                                            <input type="number" class="form-control form-control-lg" id="Failed_Login_Attempts"
+                                                   name="Failed_Login_Attempts" placeholder="e.g., 2" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="Data_Transferred_MB" class="form-label">
+                                                <i class="fas fa-exchange-alt me-2"></i>Data Transferred (MB)
+                                            </label>
+                                            <input type="number" step="0.01" class="form-control form-control-lg" id="Data_Transferred_MB"
+                                                   name="Data_Transferred_MB" placeholder="e.g., 150.5" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="Session_Duration_Minutes" class="form-label">
+                                                <i class="fas fa-clock me-2"></i>Session Duration (Minutes)
+                                            </label>
+                                            <input type="number" class="form-control form-control-lg" id="Session_Duration_Minutes"
+                                                   name="Session_Duration_Minutes" placeholder="e.g., 45" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="Accessed_Files" class="form-label">
+                                                <i class="fas fa-folder-open me-2"></i>Accessed Files Count
+                                            </label>
+                                            <input type="number" class="form-control form-control-lg" id="Accessed_Files"
+                                                   name="Accessed_Files" placeholder="e.g., 12" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="Password_Changes" class="form-label">
+                                                <i class="fas fa-key me-2"></i>Password Changes
+                                            </label>
+                                            <input type="number" class="form-control form-control-lg" id="Password_Changes"
+                                                   name="Password_Changes" placeholder="e.g., 1" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="IP_Location_Changes" class="form-label">
+                                                <i class="fas fa-map-marker-alt me-2"></i>IP Location Changes
+                                            </label>
+                                            <input type="number" class="form-control form-control-lg" id="IP_Location_Changes"
+                                                   name="IP_Location_Changes" placeholder="e.g., 3" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="Malware_Detections" class="form-label">
+                                                <i class="fas fa-shield-virus me-2"></i>Malware Detections
+                                            </label>
+                                            <input type="number" class="form-control form-control-lg" id="Malware_Detections"
+                                                   name="Malware_Detections" placeholder="e.g., 0" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="Suspicious_URL_Clicks" class="form-label">
+                                                <i class="fas fa-link me-2"></i>Suspicious URL Clicks
+                                            </label>
+                                            <input type="number" class="form-control form-control-lg" id="Suspicious_URL_Clicks"
+                                                   name="Suspicious_URL_Clicks" placeholder="e.g., 2" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="Time_Since_Last_Login_Hours" class="form-label">
+                                                <i class="fas fa-hourglass-half me-2"></i>Time Since Last Login (Hours)
+                                            </label>
+                                            <input type="number" step="0.1" class="form-control form-control-lg" id="Time_Since_Last_Login_Hours"
+                                                   name="Time_Since_Last_Login_Hours" placeholder="e.g., 24.5" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg me-md-2">
+                                        <i class="fas fa-brain me-2"></i>Analyze Behavior
+                                    </button>
+                                    <button type="reset" class="btn btn-outline-secondary btn-lg">
+                                        <i class="fas fa-undo me-2"></i>Reset Form
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <small>
+                                <i class="fas fa-info-circle me-1"></i>
+                                This AI-powered analysis will evaluate user behavior patterns to detect potential security threats in smart city environments.
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Info Cards -->
+                    <div class="row mt-4 g-3">
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-brain fa-2x text-primary mb-2"></i>
+                                    <h6>Machine Learning</h6>
+                                    <p class="small">Advanced AI algorithms for threat detection</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-chart-bar fa-2x text-success mb-2"></i>
+                                    <h6>Behavior Analysis</h6>
+                                    <p class="small">Comprehensive user behavior evaluation</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-shield-alt fa-2x text-warning mb-2"></i>
+                                    <h6>Security Enhancement</h6>
+                                    <p class="small">Proactive threat prevention</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>AI Behavior Analysis</h5>
+                    <p>Advanced machine learning for cybersecurity in smart cities.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">© 2024 AI Governance System. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
